@@ -1,15 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 ## Project Details
 
 VeggieRadar is a platform where users can register/login and add vegetarian/vegan friendly restaurants to a database so others can easily find vegetarian friendly restaurants in their area.
@@ -19,6 +9,16 @@ The main reason for this project is to learn the following technologies:
 - MongoDB
 - Next.js
 - ChakraUi
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More
 

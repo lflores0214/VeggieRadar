@@ -1,18 +1,11 @@
-import { MongoClient } from "mongodb";
+import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_DB = process.env.MONGODB_DB;
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
   throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
-
-if (!MONGODB_DB) {
-  throw new Error(
-    "Please define the MONGODB_DB environment variable inside .env.local"
-  );
+    'Please define the MONGODB_URI environment variable inside .env.local'
+  )
 }
 
 /**
@@ -20,30 +13,33 @@ if (!MONGODB_DB) {
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached = global.mongo;
+let cached = global.mongoose
 
 if (!cached) {
-  cached = global.mongo = { conn: null, promise: null };
+  cached = global.mongoose = { conn: null, promise: null }
 }
 
-export async function connectToDatabase() {
+async function dbConnect() {
   if (cached.conn) {
-    return cached.conn;
+    return cached.conn
   }
 
   if (!cached.promise) {
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    };
+      bufferCommands: false,
+      bufferMaxEntries: 0,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    }
 
-    cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
-      return {
-        client,
-        db: client.db(MONGODB_DB),
-      };
-    });
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose
+    })
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
+  cached.conn = await cached.promise
+  return cached.conn
 }
+
+export default dbConnect
